@@ -61,6 +61,30 @@ void delete_task(int d) {
     rename("temp.txt", "task.txt");
 }
 
+void done(int dn) {
+    // marks a task done in done.txt file
+    int i=1;
+    string res;
+
+    ifstream in1("task.txt");
+    getline(in1, res);
+
+    ofstream out1("done.txt");
+
+    while (res != "") {
+        if (i == dn) {
+            out1<<res<<endl;
+            out1.close();
+            in1.close();
+            delete_task(i);
+        }
+        getline(in1, res);
+        i++;
+    }
+
+
+}
+
 int main() {
     add();
 
@@ -76,5 +100,14 @@ int main() {
     cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
     list("task.txt");
     cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
+
+    cout<<endl<<"enter the no of task you want to mark done: ";
+    cin>>m;
+    done(m);
+
+    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
+    list("task.txt");
+    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
+
     return 0;
 }
