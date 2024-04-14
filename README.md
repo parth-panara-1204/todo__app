@@ -1,12 +1,17 @@
-__________TODO-APP__________
+# TODO-APP
 
-descripition:
-    simple todo app to keep track of your tasks and goals.
+## Description
 
-use:
-    run a.exe....
-    follow the instructions afterward.
+A simple todo app to keep track of your tasks and goals.
 
-contributors:
-    parth panara ()
-    arya mehta ()
+## Use
+
+To use the todo app, follow these steps:
+
+1. Run the executable file `a.exe` or the appropriate command based on your system.
+2. Follow the instructions provided by the app to manage your tasks.
+
+## Contributors
+
+- Parth Panara (parthpanara)
+- Arya Mehta (aryamehta)
