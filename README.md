@@ -13,5 +13,5 @@ To use the todo app, follow these steps:
 
 ## Contributors
 
-- Parth Panara (parthpanara)
-- Arya Mehta (aryamehta)
+- Parth Panara (parth-panara-1204)
+- Arya Mehta (aryamehta0302)
