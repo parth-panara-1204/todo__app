@@ -1,7 +1,8 @@
 #include<iostream>
 #include<fstream>
-#include<chrono>
 #include<ctime>
+#include<chrono>
+#include<deque>
 
 using namespace std;
 
@@ -10,7 +11,8 @@ class task {
 
     public:
         void get_task() {
-            cout << "Enter the task: ";
+            cout << endl <<"     Enter the task: ";
+            cin.ignore();
             getline(cin, t);
         }
 
@@ -36,7 +38,7 @@ class task {
             getline(in, res);
 
             while (res != "") {
-                cout << i <<". "<< res << endl;
+                cout << "     "<< i <<". "<< res << endl;
                 getline(in, res);
                 i++;
             }
@@ -51,15 +53,7 @@ class task {
             ifstream in("task.txt");
 
             ofstream out("temp.txt");
-
-            // if (d == 1) {
-            //     getline(in, s);
-            //     i += 1;
-            //     ofstream o("logs.txt", ios::app);
-            //     o << log() << "   task deleted: " << s << endl;
-            //     o.close();
-            // }
-
+            cin.ignore();
             while (getline(in, s)) {
                 if (i == d) {
                     i += 1;
@@ -112,33 +106,86 @@ class task {
             time_t now_t = std::chrono::system_clock::to_time_t(now);
             return ctime(&now_t);
         }
+
+        void show_logs() {
+            ifstream file("logs.txt");
+            deque<string> last10Lines;
+
+            std::string line;
+            while (std::getline(file, line)) {
+                if (last10Lines.size() == 10) {
+                    last10Lines.pop_front();
+                }
+                last10Lines.push_back(line);
+            }
+
+            file.close();
+            
+            cout<<endl;
+            for(int i=0 ; i<10 ; i++){
+                cout<< "     " << last10Lines[i] <<endl;
+            }
+        }
 };
 
 int main() {
     task T;
 
-    T.add();
+    int n;
+    int p;
+    
+    cout<<"-----------------------------------------------------------To-do-----------------------------------------------------------"<<endl;
+    
+    do{
+        cout<<endl<<"          1. Add a task"<<endl<<"          2. Delete a task"<<endl<<"          3. Mark a task complete!"<<endl<<"          4. List all pending tasks"<<endl<<"          5. List all completed tasks"<<endl<<"          6. Show logs"<<endl<<"          7. Exit"<<endl;
+        cout<<endl<<"     Enter your choice: ";
+        cin>>n;
 
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
-    T.list("task.txt");
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
+        switch(n) {
+            case 1:
+                T.add();
+                cout<<endl<<"     Task added!"<<endl;
+                break;
+                
+            case 2:
+                cout<<endl<<"-------------------------------------List of tasks-------------------------------------"<<endl;
+                T.list("task.txt");
+                cout<<endl<<"     Enter the number of task you wanna delete: ";
+                cin>>p;
+                
+                T.delete_task(p);
+                cout<<endl<<"     Task deleted"<<endl;
+                break;
 
-    cout<<endl<<"enter the number of line you wanna delete: ";
-    int m;
-    cin>>m;
-    T.delete_task(m);
+            case 3:
+                cout<<endl<<"-------------------------------------List of tasks-------------------------------------"<<endl;
+                T.list("task.txt");
+                cout<<endl<<"     Enter the number of task you wanna mark done: ";
+                cin>>p;
+                
+                T.done(p);
+                cout<< endl <<"     Marked done!"<<endl;
+                break;
 
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
-    T.list("task.txt");
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
+            case 4:
+                cout<<endl<<"-------------------------------------List of tasks-------------------------------------"<<endl;
+                T.list("task.txt");
+                cout<<endl;
+                break;
 
-    cout<<endl<<"enter the no of task you want to mark done: ";
-    cin>>m;
-    T.done(m);
+            case 5:
+                cout<<endl<<"-------------------------------------List of completed tasks-------------------------------------"<<endl;
+                T.list("done.txt");
+                cout<<endl;
+                break;
 
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
-    T.list("task.txt");
-    cout<<endl<<"-------------------------------------------------------------------------------"<<endl;
-
+            case 6:
+                cout<<endl<<"--------------------------------------Logs--------------------------------------";
+                T.show_logs();
+                cout<<endl;
+                break;        
+        }
+        
+    }while(n != 7);
     return 0;
 }
